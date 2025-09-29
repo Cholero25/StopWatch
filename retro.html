@@ -121,5 +121,29 @@
   </footer>
 
   <script src="stopwatch.js"></script>
+  <script>
+      // Hacemos funciones accesibles globalmente
+      document.addEventListener("DOMContentLoaded", () => {
+        window.setMode = setMode;
+        window.start = start;
+        window.stopStopwatch = stopStopwatch;
+        window.resetStopwatch = resetStopwatch;
+        window.setTimerFromInputs = setTimerFromInputs;
+
+        // Compatibilidad táctil
+        const addTouch = (el, fn) => {
+          if(!el) return;
+          el.addEventListener("click", fn);
+          el.addEventListener("touchstart", fn);
+        };
+
+        addTouch(document.getElementById("btnStart"), start);
+        addTouch(document.getElementById("btnStop"), stopStopwatch);
+        addTouch(document.getElementById("btnReset"), resetStopwatch);
+        addTouch(document.getElementById("btnStopwatch"), () => setMode("stopwatch"));
+        addTouch(document.getElementById("btnTimer"), () => setMode("timer"));
+        addTouch(document.getElementById("btnSetTimer"), setTimerFromInputs);
+      });
+    </script>
 </body>
 </html>
