@@ -138,3 +138,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnSetTimer")?.addEventListener("click", setTimerFromInputs);
 
 });
+const addTouch = (el, fn) => {
+  if(!el) return;
+  el.addEventListener("click", fn);
+  el.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // Evita doble disparo
+    fn();
+  }, { passive: false });
+};
