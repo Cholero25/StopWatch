@@ -123,6 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+
+  function addTouchListener(el, fn) {
+  el.addEventListener("click", fn);
+  el.addEventListener("touchstart", fn);
+}
   /* ====== Listeners de botones ====== */
   document.getElementById("btnStart").addEventListener("click", start);
   document.getElementById("btnStop").addEventListener("click", stopStopwatch);
