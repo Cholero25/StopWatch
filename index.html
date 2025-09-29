@@ -16,7 +16,7 @@
         <h2 class="text-3xl font-bold lg:text-4xl ml-3 ">HueTime</h2>
       </div>
 
-      <div class="flex items-center cursor-pointer hover:text-blue-600 transition">
+      <div id="themesToggle" class="flex items-center cursor-pointer hover:text-blue-600 transition">
         <div class="flex items-center gap-3">
           <span class="text-3xl"><img src="Images/Themes.png" class=" w-[40px] h-[auto]"></span>
           <span class="hidden md:block font-semibold text-2xl">Themes</span>
@@ -31,7 +31,15 @@
            
         </div>
       </div>
+      <div id="themesMenu" class="hidden absolute right-6 top-20 bg-white border border-gray-200 rounded-lg shadow-lg w-48 z-50">
+        <ul class="flex flex-col">
+          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer"><a href="night.html">🌙 Dark Mode</a></li>
+          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer"><a href="vintage.html">📜 Vintage Mode</a></li>
+          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer"><a href="retro.html">🎨 Retro Mode</a></li>
+        </ul>
+      </div>
     </nav>
+
 
 <section class="flex flex-col  flex-1  items-center justify-center bg-cover bg-center ">
 
@@ -46,11 +54,96 @@
     </div>
   </div>
 
-  <div class="flex space-x-4 mt-6 md:mt-3">
-    <button class="md:w-[150px] px-8 py-3 rounded-lg bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold shadow-md hover:from-blue-500 hover:to-blue-700 hover:shadow-lg transform hover:scale-105 transition" onclick="addNum();">Start</button>
-    <button class="md:w-[150px] px-8 py-3 rounded-lg bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold shadow-md hover:from-blue-500 hover:to-blue-700 hover:shadow-lg transform hover:scale-105 transition" onclick="stopStopwatch()">Stop</button>
-    <button class="md:w-[150px] px-8 py-3 rounded-lg bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold shadow-md hover:from-blue-500 hover:to-blue-700 hover:shadow-lg transform hover:scale-105 transition" onclick="resetStopwatch()">Reset</button>
+  <div class="flex flex-col items-center gap-4 p-4">
+  <div class="flex gap-3">
+     <button id="btnStopwatch" onclick="setMode('stopwatch')" 
+          class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">
+    <!-- Icono reloj -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+    </svg>
+    <span class="font-medium">Cronómetro</span>
+  </button>
+
+  <!-- Temporizador -->
+  <button id="btnTimer" onclick="setMode('timer')" 
+          class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">
+    <!-- Icono temporizador -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l2 2"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+    </svg>
+    <span class="font-medium">Temporizador</span>
+  </button>
   </div>
+
+  <!-- Inputs para temporizador (ocultos por defecto) -->
+<div id="timerInputs" class="hidden flex gap-2 items-center mt-4">
+  <div class="relative">
+    <input id="hours" type="number" min="0" placeholder="HH" 
+           class="w-20 p-2 pl-8 border rounded-lg text-center focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+    <!-- Icono reloj -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 absolute left-2 top-1/2 -translate-y-1/2 text-gray-400" 
+         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  </div>
+
+  <div class="relative">
+    <input id="minutes" type="number" min="0" max="59" placeholder="MM" 
+           class="w-20 p-2 pl-8 border rounded-lg text-center focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+    <!-- Icono minutos -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 absolute left-2 top-1/2 -translate-y-1/2 text-gray-400" 
+         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  </div>
+
+  <div class="relative">
+    <input id="seconds" type="number" min="0" max="59" placeholder="SS" 
+           class="w-20 p-2 pl-8 border rounded-lg text-center focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+    <!-- Icono segundos -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 absolute left-2 top-1/2 -translate-y-1/2 text-gray-400" 
+         fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l2 2m8-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+    </svg>
+  </div>
+
+  <button onclick="setTimerFromInputs()" 
+          class="px-4 py-2 rounded-lg bg-yellow-500 text-white font-medium hover:bg-yellow-600 transition">
+    Set
+  </button>
+</div>
+
+<!-- Botones de control (Start / Stop / Reset) -->
+<div class="flex gap-3 mt-4">
+  <button id="btnStart" onclick="start()" 
+          class="flex items-center gap-2 px-6 py-2 bg-indigo-600 text-white rounded-lg shadow-sm hover:bg-indigo-700 transition">
+    <!-- Icono Play -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v18l15-9L5 3z"/>
+    </svg>
+    Start
+  </button>
+
+  <button id="btnStop" onclick="stopStopwatch()" 
+          class="flex items-center gap-2 px-6 py-2 bg-gray-600 text-white rounded-lg shadow-sm hover:bg-gray-700 transition">
+    <!-- Icono Stop -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h12v12H6z"/>
+    </svg>
+    Stop
+  </button>
+
+  <button id="btnReset" onclick="resetStopwatch()" 
+          class="flex items-center gap-2 px-6 py-2 bg-red-600 text-white rounded-lg shadow-sm hover:bg-red-700 transition">
+    <!-- Icono Delete -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+    Reset
+  </button>
 
 </section>
     <footer class="bg-[#E9ECEF] py-6 mt-10">
